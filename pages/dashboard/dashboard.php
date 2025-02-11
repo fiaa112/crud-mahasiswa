@@ -27,6 +27,7 @@ $pages = ceil($totalMhs / $limit);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,6 +54,7 @@ $pages = ceil($totalMhs / $limit);
         }
     </script>
 </head>
+
 <body class="bg-dark-100 text-gray-100">
     <!-- Header -->
     <div class="bg-gradient-to-r from-dark-200 to-dark-300 p-8">
@@ -78,7 +80,7 @@ $pages = ceil($totalMhs / $limit);
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-gradient-to-br from-dark-200 to-dark-300 rounded-xl shadow-lg p-6 border border-dark-400">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-accent-blue bg-opacity-20">
@@ -112,7 +114,7 @@ $pages = ceil($totalMhs / $limit);
         <div class="bg-gradient-to-br from-dark-200 to-dark-300 rounded-xl shadow-lg p-6 border border-dark-400">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-white">Data Mahasiswa</h1>
-                <button onclick="openModal()" 
+                <button onclick="openModal()"
                     class="bg-accent-purple hover:bg-opacity-80 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -124,44 +126,44 @@ $pages = ceil($totalMhs / $limit);
             <!-- Grid Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <?php foreach ($mahasiswa as $mhs): ?>
-                <div class="bg-dark-300 rounded-lg shadow-lg p-4 hover:bg-dark-400 transition-all duration-200 border border-dark-400">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-accent-purple bg-opacity-20 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+                    <div class="bg-dark-300 rounded-lg shadow-lg p-4 hover:bg-dark-400 transition-all duration-200 border border-dark-400">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-accent-purple bg-opacity-20 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-white"><?= htmlspecialchars($mhs['nama']) ?></h3>
+                                <p class="text-gray-400"><?= htmlspecialchars($mhs['nim']) ?></p>
+                            </div>
                         </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-white"><?= htmlspecialchars($mhs['nama']) ?></h3>
-                            <p class="text-gray-400"><?= htmlspecialchars($mhs['nim']) ?></p>
+                        <div class="space-y-2">
+                            <p class="text-sm text-gray-400">
+                                <span class="font-medium text-gray-300">Jurusan:</span> <?= htmlspecialchars($mhs['jurusan']) ?>
+                            </p>
+                            <p class="text-sm text-gray-400">
+                                <span class="font-medium text-gray-300">Angkatan:</span> <?= htmlspecialchars($mhs['angkatan']) ?>
+                            </p>
+                        </div>
+                        <div class="mt-4 flex justify-end space-x-2">
+                            <a href="../edit/edit.php?id=<?= $mhs['id'] ?>"
+                                class="px-3 py-1 bg-accent-blue hover:bg-blue-600 text-white rounded-md text-sm transition-colors duration-200">
+                                Edit
+                            </a>
+                            <a href="../hapus/hapus.php?id=<?= $mhs['id'] ?>"
+                                class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm transition-colors duration-200"
+                                onclick="return confirm('Yakin mau hapus data ini?')">
+                                Hapus
+                            </a>
                         </div>
                     </div>
-                    <div class="space-y-2">
-                        <p class="text-sm text-gray-400">
-                            <span class="font-medium text-gray-300">Jurusan:</span> <?= htmlspecialchars($mhs['jurusan']) ?>
-                        </p>
-                        <p class="text-sm text-gray-400">
-                            <span class="font-medium text-gray-300">Angkatan:</span> <?= htmlspecialchars($mhs['angkatan']) ?>
-                        </p>
-                    </div>
-                    <div class="mt-4 flex justify-end space-x-2">
-                        <a href="../edit/edit.php?id=<?= $mhs['id'] ?>" 
-                            class="px-3 py-1 bg-accent-blue hover:bg-blue-600 text-white rounded-md text-sm transition-colors duration-200">
-                            Edit
-                        </a>
-                        <a href="../hapus/hapus.php?id=<?= $mhs['id'] ?>" 
-                            class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm transition-colors duration-200"
-                            onclick="return confirm('Yakin mau hapus data ini?')">
-                            Hapus
-                        </a>
-                    </div>
-                </div>
                 <?php endforeach; ?>
             </div>
 
             <!-- Pagination -->
             <div class="flex justify-center mt-8">
-                <?php for($i = 1; $i <= $pages; $i++): ?>
+                <?php for ($i = 1; $i <= $pages; $i++): ?>
                     <a href="?page=<?= $i ?>" class="mx-1 px-4 py-2 rounded-lg <?= $page == $i ? 'bg-accent-purple text-white' : 'bg-dark-300 text-gray-400 hover:bg-dark-400' ?> transition-colors duration-200">
                         <?= $i ?>
                     </a>
@@ -171,8 +173,8 @@ $pages = ceil($totalMhs / $limit);
     </div>
 
     <!-- Modal -->
-    <div id="formModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-dark-200 p-8 rounded-xl shadow-lg w-full max-w-4xl"> <!-- Ubah max-w-md menjadi max-w-4xl untuk modal lebih lebar -->
+    <div id="formModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center transition-opacity duration-300 opacity-0">
+        <div class="bg-dark-200 p-8 rounded-xl shadow-lg w-full max-w-4xl transform transition-transform duration-300 scale-95">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-white">Tambah Mahasiswa</h2>
                 <button onclick="closeModal()" class="text-gray-400 hover:text-white">
@@ -186,33 +188,52 @@ $pages = ceil($totalMhs / $limit);
                 <div class="w-1/2 flex items-center justify-center">
                     <img src="../../assets/images/add-info.png" alt="Add Student" class="w-full max-w-md">
                 </div>
-                
+
                 <!-- Kolom Kanan - Form -->
                 <div class="w-1/2">
                     <form action="../tambah/proses_tambah.php" method="POST">
-                        <div class="grid grid-cols-2 gap-4"> <!-- Ubah space-y-4 menjadi grid 2 kolom -->
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-gray-400 mb-2">NIM</label>
-                                <input type="text" name="nim" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                                <input type="text" name="nim" placeholder="Masukkan NIM" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-2">Nama</label>
-                                <input type="text" name="nama" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                                <input type="text" name="nama" placeholder="Nama lengkap" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-2">Jurusan</label>
-                                <input type="text" name="jurusan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                                <input type="text" name="jurusan" placeholder="Masukkan jurusan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-2">Angkatan</label>
-                                <input type="number" name="angkatan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                                <input type="number" name="angkatan" placeholder="Tahun angkatan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
                             </div>
-                            <div class="col-span-2"> <!-- Jenis kelamin full width -->
+                            <div class="col-span-2">
                                 <label class="block text-gray-400 mb-2">Jenis Kelamin</label>
-                                <select name="jenis_kelamin" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                </select>
+                                <div class="flex items-center justify-center space-x-8">
+                                    <!-- Laki-laki -->
+                                    <label class="flex flex-col items-center cursor-pointer group">
+                                        <input type="radio" name="jenis_kelamin" value="L" class="peer hidden" required>
+                                        <div class="p-4 bg-dark-300 rounded-xl group-hover:bg-accent-purple peer-checked:bg-accent-purple transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 group-hover:text-white peer-checked:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z M20 4h-4v4m4-4l-5 5" />
+                                            </svg>
+                                        </div>
+                                        <span class="mt-2 text-sm text-gray-400 group-hover:text-white peer-checked:text-accent-purple">Laki-laki</span>
+                                    </label>
+
+                                    <!-- Perempuan -->
+                                    <label class="flex flex-col items-center cursor-pointer group">
+                                        <input type="radio" name="jenis_kelamin" value="P" class="peer hidden" required>
+                                        <div class="p-4 bg-dark-300 rounded-xl group-hover:bg-accent-purple peer-checked:bg-accent-purple transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 group-hover:text-white peer-checked:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z M12 4v8m-4-4h8" />
+                                            </svg>
+                                        </div>
+                                        <span class="mt-2 text-sm text-gray-400 group-hover:text-white peer-checked:text-accent-purple">Perempuan</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-6 flex justify-end space-x-3">
@@ -226,15 +247,29 @@ $pages = ceil($totalMhs / $limit);
     </div>
 
     <script>
-    function openModal() {
-        document.getElementById('formModal').classList.remove('hidden');
-        document.getElementById('formModal').classList.add('flex');
-    }
+        function openModal() {
+            const modal = document.getElementById('formModal');
+            modal.classList.remove('hidden');
+            // Trigger reflow
+            modal.offsetHeight;
+            modal.classList.add('flex');
+            modal.classList.remove('opacity-0');
+            modal.querySelector('.bg-dark-200').classList.remove('scale-95');
+            modal.querySelector('.bg-dark-200').classList.add('scale-100');
+        }
 
-    function closeModal() {
-        document.getElementById('formModal').classList.add('hidden');
-        document.getElementById('formModal').classList.remove('flex');
-    }
-</script>
+        function closeModal() {
+            const modal = document.getElementById('formModal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('.bg-dark-200').classList.remove('scale-100');
+            modal.querySelector('.bg-dark-200').classList.add('scale-95');
+
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300); // Sesuaikan dengan duration transisi
+        }
+    </script>
 </body>
+
 </html>
