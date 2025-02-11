@@ -186,11 +186,9 @@ $pages = ceil($totalMhs / $limit);
                         <button onclick="openEditModal('<?= $mhs['id'] ?>', '<?= $mhs['nim'] ?>', '<?= $mhs['nama'] ?>', '<?= $mhs['jurusan'] ?>', '<?= $mhs['angkatan'] ?>', '<?= $mhs['jenis_kelamin'] ?>')" class="bg-accent-purple hover:bg-accent-purple-dark px-3 py-1 rounded-lg text-sm text-white">Edit</button>
 
 
-                            <a href="../hapus/hapus.php?id=<?= $mhs['id'] ?>"
-                                class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm transition-colors duration-200"
-                                onclick="return confirm('Yakin mau hapus data ini?')">
-                                Hapus
-                            </a>
+                        <button onclick="deleteData(<?php echo $mhs['id']; ?>)" class="bg-dark-300 text-red-500 px-3 py-1 rounded-lg hover:bg-dark-400 text-sm transition-colors duration-200">Hapus</button>
+
+
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -524,6 +522,73 @@ $pages = ceil($totalMhs / $limit);
                 });
             });
         });
+
+        // Tambahkan function untuk handle hapus
+        function deleteData(id) {
+            Swal.fire({
+                title: 'Hapus Data?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#7C3AED',
+                cancelButtonColor: '#374151',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    popup: 'bg-dark-200 text-white',
+                    title: 'text-white',
+                    htmlContainer: 'text-gray-300',
+                    confirmButton: 'bg-accent-purple',
+                    cancelButton: 'bg-dark-300 hover:bg-dark-400'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('id', id);
+
+                    fetch('../hapus/hapus.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Terhapus!',
+                                text: 'Data mahasiswa berhasil dihapus',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                customClass: {
+                                    popup: 'bg-dark-200 text-white',
+                                    title: 'text-white',
+                                    htmlContainer: 'text-gray-300'
+                                }
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            throw new Error(data.message || 'Terjadi kesalahan saat menghapus data');
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: error.message || 'Terjadi kesalahan pada server',
+                            confirmButtonText: 'Tutup',
+                            confirmButtonColor: '#7C3AED',
+                            customClass: {
+                                popup: 'bg-dark-200 text-white',
+                                title: 'text-white',
+                                htmlContainer: 'text-gray-300',
+                                confirmButton: 'bg-accent-purple'
+                            }
+                        });
+                    });
+                }
+            });
+        }
     </script>
 </body>
 
