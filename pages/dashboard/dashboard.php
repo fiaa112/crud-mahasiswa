@@ -183,10 +183,9 @@ $pages = ceil($totalMhs / $limit);
                             </p>
                         </div>
                         <div class="mt-4 flex justify-end space-x-2">
-                            <a href="../edit/edit.php?id=<?= $mhs['id'] ?>"
-                                class="px-3 py-1 bg-accent-blue hover:bg-blue-600 text-white rounded-md text-sm transition-colors duration-200">
-                                Edit
-                            </a>
+                        <button onclick="openEditModal('<?= $mhs['id'] ?>', '<?= $mhs['nim'] ?>', '<?= $mhs['nama'] ?>', '<?= $mhs['jurusan'] ?>', '<?= $mhs['angkatan'] ?>', '<?= $mhs['jenis_kelamin'] ?>')" class="bg-accent-purple hover:bg-accent-purple-dark px-3 py-1 rounded-lg text-sm text-white">Edit</button>
+
+
                             <a href="../hapus/hapus.php?id=<?= $mhs['id'] ?>"
                                 class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm transition-colors duration-200"
                                 onclick="return confirm('Yakin mau hapus data ini?')">
@@ -281,6 +280,88 @@ $pages = ceil($totalMhs / $limit);
             </div>
         </div>
     </div>
+
+    <!-- Modal EDIT -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center transition-opacity duration-300 opacity-0">
+        <div class="bg-dark-200 p-8 rounded-xl shadow-lg w-full max-w-4xl transform transition-transform duration-300 scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-white">Edit Data Mahasiswa</h2>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex gap-8">
+                <!-- Kolom Kiri - Gambar -->
+                <div class="w-1/2 flex items-center justify-center">
+                    <img src="../../assets/images/add-info.png" alt="Edit Student" class="w-full max-w-md">
+                </div>
+
+                <!-- Kolom Kanan - Form -->
+                <div class="w-1/2">
+                    <form action="../edit/edit.php" method="POST">
+                        <input type="hidden" name="id" id="edit_id">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-400 mb-2">NIM</label>
+                                <input type="text" name="nim" id="edit_nim" placeholder="Masukkan NIM" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Nama</label>
+                                <input type="text" name="nama" id="edit_nama" placeholder="Nama lengkap" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Jurusan</label>
+                                <select name="jurusan" id="edit_jurusan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                                    <?php
+                                    $query = $conn->query("SELECT DISTINCT jurusan FROM mahasiswa ORDER BY jurusan");
+                                    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                                        echo "<option value='" . $row['jurusan'] . "'>" . $row['jurusan'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Angkatan</label>
+                                <input type="number" name="angkatan" id="edit_angkatan" placeholder="Tahun angkatan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-gray-400 mb-2">Jenis Kelamin</label>
+                                <div class="flex items-center justify-center space-x-8">
+                                    <!-- Laki-laki -->
+                                    <label class="flex flex-col items-center cursor-pointer group">
+                                        <input type="radio" name="jenis_kelamin" id="edit_jk_l" value="Laki-laki" class="peer hidden" required>
+                                        <div class="p-4 bg-dark-300 rounded-xl group-hover:bg-accent-purple peer-checked:bg-accent-purple transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 group-hover:text-white peer-checked:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z M20 4h-4v4m4-4l-5 5" />
+                                            </svg>
+                                        </div>
+                                        <span class="mt-2 text-sm text-gray-400 group-hover:text-white peer-checked:text-accent-purple">Laki-laki</span>
+                                    </label>
+
+                                    <!-- Perempuan -->
+                                    <label class="flex flex-col items-center cursor-pointer group">
+                                        <input type="radio" name="jenis_kelamin" id="edit_jk_p" value="Perempuan" class="peer hidden" required>
+                                        <div class="p-4 bg-dark-300 rounded-xl group-hover:bg-accent-purple peer-checked:bg-accent-purple transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 group-hover:text-white peer-checked:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z M12 4v8m-4-4h8" />
+                                            </svg>
+                                        </div>
+                                        <span class="mt-2 text-sm text-gray-400 group-hover:text-white peer-checked:text-accent-purple">Perempuan</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end space-x-3">
+                            <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-dark-300 text-gray-400 rounded-lg hover:bg-dark-400">Batal</button>
+                            <button type="submit" class="px-4 py-2 bg-accent-purple text-white rounded-lg hover:bg-opacity-80">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Modal functions
@@ -346,6 +427,102 @@ $pages = ceil($totalMhs / $limit);
                     window.history.replaceState({}, document.title, window.location.pathname);
                 });
             }
+        });
+
+        function openEditModal(id, nim, nama, jurusan, angkatan, jenisKelamin) {
+            const modal = document.getElementById('editModal');
+            // Isi form dengan data mahasiswa
+            document.getElementById('edit_id').value = id;
+            document.getElementById('edit_nim').value = nim;
+            document.getElementById('edit_nama').value = nama;
+            document.getElementById('edit_jurusan').value = jurusan;
+            document.getElementById('edit_angkatan').value = angkatan;
+
+            if (jenisKelamin === 'Laki-laki') {
+                document.getElementById('edit_jk_l').checked = true;
+            } else {
+                document.getElementById('edit_jk_p').checked = true;
+            }
+
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex'; // Tambahkan ini
+            modal.offsetHeight;
+            modal.classList.remove('opacity-0');
+            modal.querySelector('.bg-dark-200').classList.remove('scale-95');
+            modal.querySelector('.bg-dark-200').classList.add('scale-100');
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('editModal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('.bg-dark-200').classList.remove('scale-100');
+            modal.querySelector('.bg-dark-200').classList.add('scale-95');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none'; // Tambahkan ini
+            }, 300);
+        }
+
+        // Tambahkan script untuk handle form edit
+        document.querySelector('#editModal form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('../edit/edit.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'Data mahasiswa berhasil diperbarui',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        customClass: {
+                            popup: 'bg-dark-200 text-white',
+                            title: 'text-white',
+                            htmlContainer: 'text-gray-300'
+                        }
+                    }).then(() => {
+                        closeEditModal();
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: data.message || 'Terjadi kesalahan saat memperbarui data',
+                        confirmButtonText: 'Tutup',
+                        confirmButtonColor: '#7C3AED',
+                        customClass: {
+                            popup: 'bg-dark-200 text-white',
+                            title: 'text-white',
+                            htmlContainer: 'text-gray-300',
+                            confirmButton: 'bg-accent-purple'
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Terjadi kesalahan pada server',
+                    confirmButtonText: 'Tutup',
+                    confirmButtonColor: '#7C3AED',
+                    customClass: {
+                        popup: 'bg-dark-200 text-white',
+                        title: 'text-white',
+                        htmlContainer: 'text-gray-300',
+                        confirmButton: 'bg-accent-purple'
+                    }
+                });
+            });
         });
     </script>
 </body>
