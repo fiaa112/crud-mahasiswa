@@ -112,12 +112,13 @@ $pages = ceil($totalMhs / $limit);
         <div class="bg-gradient-to-br from-dark-200 to-dark-300 rounded-xl shadow-lg p-6 border border-dark-400">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-white">Data Mahasiswa</h1>
-                <a href="../tambah/tambah.php" class="bg-accent-purple hover:bg-opacity-80 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center">
+                <button onclick="openModal()" 
+                    class="bg-accent-purple hover:bg-opacity-80 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                     Tambah Mahasiswa
-                </a>
+                </button>
             </div>
 
             <!-- Grid Cards -->
@@ -168,5 +169,72 @@ $pages = ceil($totalMhs / $limit);
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div id="formModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-dark-200 p-8 rounded-xl shadow-lg w-full max-w-4xl"> <!-- Ubah max-w-md menjadi max-w-4xl untuk modal lebih lebar -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-white">Tambah Mahasiswa</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex gap-8"> <!-- Container untuk 2 kolom -->
+                <!-- Kolom Kiri - Gambar -->
+                <div class="w-1/2 flex items-center justify-center">
+                    <img src="../../assets/images/add-info.png" alt="Add Student" class="w-full max-w-md">
+                </div>
+                
+                <!-- Kolom Kanan - Form -->
+                <div class="w-1/2">
+                    <form action="../tambah/proses_tambah.php" method="POST">
+                        <div class="grid grid-cols-2 gap-4"> <!-- Ubah space-y-4 menjadi grid 2 kolom -->
+                            <div>
+                                <label class="block text-gray-400 mb-2">NIM</label>
+                                <input type="text" name="nim" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Nama</label>
+                                <input type="text" name="nama" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Jurusan</label>
+                                <input type="text" name="jurusan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2">Angkatan</label>
+                                <input type="number" name="angkatan" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                            </div>
+                            <div class="col-span-2"> <!-- Jenis kelamin full width -->
+                                <label class="block text-gray-400 mb-2">Jenis Kelamin</label>
+                                <select name="jenis_kelamin" class="w-full bg-dark-300 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-purple" required>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end space-x-3">
+                            <button type="button" onclick="closeModal()" class="px-4 py-2 bg-dark-300 text-gray-400 rounded-lg hover:bg-dark-400">Batal</button>
+                            <button type="submit" class="px-4 py-2 bg-accent-purple text-white rounded-lg hover:bg-opacity-80">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function openModal() {
+        document.getElementById('formModal').classList.remove('hidden');
+        document.getElementById('formModal').classList.add('flex');
+    }
+
+    function closeModal() {
+        document.getElementById('formModal').classList.add('hidden');
+        document.getElementById('formModal').classList.remove('flex');
+    }
+</script>
 </body>
 </html>
