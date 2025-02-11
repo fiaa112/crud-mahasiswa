@@ -53,6 +53,42 @@ $pages = ceil($totalMhs / $limit);
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Check URL parameters for status
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const message = urlParams.get('message');
+
+        if (status === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: message || 'Data berhasil ditambahkan',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                    popup: 'bg-dark-200 text-white',
+                    title: 'text-white',
+                    htmlContainer: 'text-gray-300'
+                }
+            });
+        } else if (status === 'error') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: message || 'Terjadi kesalahan',
+                confirmButtonText: 'Tutup',
+                confirmButtonColor: '#7C3AED',
+                customClass: {
+                    popup: 'bg-dark-200 text-white',
+                    title: 'text-white',
+                    htmlContainer: 'text-gray-300',
+                    confirmButton: 'bg-accent-purple'
+                }
+            });
+        }
+    </script>
 </head>
 
 <body class="bg-dark-100 text-gray-100">
@@ -172,7 +208,7 @@ $pages = ceil($totalMhs / $limit);
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal TAMBAH -->
     <div id="formModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center transition-opacity duration-300 opacity-0">
         <div class="bg-dark-200 p-8 rounded-xl shadow-lg w-full max-w-4xl transform transition-transform duration-300 scale-95">
             <div class="flex justify-between items-center mb-6">
@@ -191,7 +227,7 @@ $pages = ceil($totalMhs / $limit);
 
                 <!-- Kolom Kanan - Form -->
                 <div class="w-1/2">
-                    <form action="../tambah/proses_tambah.php" method="POST">
+                    <form action="../tambah/tambah.php" method="POST">
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-gray-400 mb-2">NIM</label>
@@ -245,12 +281,12 @@ $pages = ceil($totalMhs / $limit);
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // Modal functions
         function openModal() {
             const modal = document.getElementById('formModal');
             modal.classList.remove('hidden');
-            // Trigger reflow
             modal.offsetHeight;
             modal.classList.add('flex');
             modal.classList.remove('opacity-0');
@@ -267,8 +303,50 @@ $pages = ceil($totalMhs / $limit);
             setTimeout(() => {
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
-            }, 300); // Sesuaikan dengan duration transisi
+            }, 300);
         }
+
+        // Sweet Alert handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: message || 'Data berhasil ditambahkan',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass: {
+                        popup: 'bg-dark-200 text-white',
+                        title: 'text-white',
+                        htmlContainer: 'text-gray-300'
+                    }
+                }).then(() => {
+                    // Hapus parameter dari URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                });
+            } else if (status === 'error') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: message || 'Terjadi kesalahan',
+                    confirmButtonText: 'Tutup',
+                    confirmButtonColor: '#7C3AED',
+                    customClass: {
+                        popup: 'bg-dark-200 text-white',
+                        title: 'text-white',
+                        htmlContainer: 'text-gray-300',
+                        confirmButton: 'bg-accent-purple'
+                    }
+                }).then(() => {
+                    // Hapus parameter dari URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                });
+            }
+        });
     </script>
 </body>
 
