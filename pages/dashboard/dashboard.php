@@ -89,21 +89,21 @@ $pages = ceil($totalMhs / $limit);
             });
         }
     </script>
-</head>
+</head> 
 
 <body class="bg-dark-100 text-gray-100">
     <!-- Header -->
     <div class="bg-gradient-to-r from-dark-200 to-dark-300 p-8">
-        <div class="container mx-auto">
-            <h1 class="text-4xl font-bold text-white mb-2">Sistem Akademik Mahasiswa</h1>
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-white mb-2">Sistem Akademik Mahasiswa</h1>
             <p class="text-gray-400">Kelola data mahasiswa dengan mudah dan efisien</p>
         </div>
     </div>
 
     <div class="container mx-auto px-4 py-8">
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-gradient-to-br from-dark-200 to-dark-300 rounded-xl shadow-lg p-6 border border-dark-400">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-20 mb-8 mx-4 lg:mx-40">
+        <div class="bg-gradient-to-br from-dark-200 to-dark-300 rounded-xl shadow-lg p-6 border border-dark-400">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-accent-purple bg-opacity-20">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
