@@ -24,7 +24,7 @@ Aplikasi web untuk mengelola data mahasiswa dengan mudah dan efisien. Dibangun m
 
 1. Clone repository ini ke folder htdocs XAMPP:
    ```bash
-   git clone https://github.com/username/mahasiswa-project.git
+   git clone [https://github.com/username/mahasiswa-project.git](https://github.com/fiaa112/crud-mahasiswa.git)
    ```
 
 2. Import database:
